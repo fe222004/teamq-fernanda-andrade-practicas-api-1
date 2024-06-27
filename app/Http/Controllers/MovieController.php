@@ -24,7 +24,6 @@ class MovieController extends Controller
         $movies = QueryBuilder::for(Movie::class)
             ->allowedFilters([
                 AllowedFilter::partial('title'),
-                // Añadir otros filtros permitidos aquí
             ])
             ->allowedSorts('title', 'release_date') 
             ->paginate($request->get('perPage', 10));

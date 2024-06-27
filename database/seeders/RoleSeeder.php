@@ -21,13 +21,11 @@ class RoleSeeder extends Seeder
        
         $bearer = Role::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'Bearer']);
         $guest = Role::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'Guest']);
-
         $actorIndex = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'actor-index']);
         $actorStore = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'actor-store']);
         $actorShow = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'actor-show']);
         $actorUpdate = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'actor-update']);
         $actorDestroy = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'actor-destroy']);
-
         $imageIndex = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'image-index']);
         $imageStore = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'image-store']);
         $imageShow = Permission::firstOrCreate(['guard_name' => 'sanctum', 'name' => 'image-show']);

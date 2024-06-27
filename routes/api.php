@@ -23,6 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    
+    Route::get('/movies', [\App\Http\Controllers\MovieController::class, 'index']);
+    Route::get('/movies/{movie}', [\App\Http\Controllers\MovieController::class, 'show']);
+    Route::post('/movies', [\App\Http\Controllers\MovieController::class, 'store']);
+    Route::put('/movies/{movie}', [\App\Http\Controllers\MovieController::class, 'update']);
+    Route::delete('/movie/{movie}', [\App\Http\Controllers\MovieController::class, 'destroy']);
 
     Route::get('/actors', [\App\Http\Controllers\ActorController::class, 'index']);
     Route::get('/actors/{actor}', [\App\Http\Controllers\ActorController::class, 'show']);
@@ -35,12 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/directors', [\App\Http\Controllers\DirectorController::class, 'store']);
     Route::put('/directors/{director}', [\App\Http\Controllers\DirectorController::class, 'update']);
     Route::delete('/directors/{director}', [\App\Http\Controllers\DirectorController::class, 'destroy']);
-
-    Route::get('/movies', [\App\Http\Controllers\MovieController::class, 'index']);
-    Route::get('/movies/{movie}', [\App\Http\Controllers\MovieController::class, 'show']);
-    Route::post('/movies', [\App\Http\Controllers\MovieController::class, 'store']);
-    Route::put('/movies/{movie}', [\App\Http\Controllers\MovieController::class, 'update']);
-    Route::delete('/movie/{movie}', [\App\Http\Controllers\MovieController::class, 'destroy']);
 
     Route::get('/rents', [\App\Http\Controllers\RentController::class, 'index']);
     Route::get('/rents/{rent}', [\App\Http\Controllers\RentController::class, 'show']);
