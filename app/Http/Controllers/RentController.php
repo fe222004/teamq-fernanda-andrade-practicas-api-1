@@ -6,53 +6,45 @@ use App\Http\Requests\RentRequest;
 use App\Http\Resources\RentResource;
 use App\Models\Rent;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Authenticated;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\QueryParam;
 use Symfony\Component\HttpFoundation\Response;
 
 class RentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Rent management")]
+    #[QueryParam("per_page", "int")]
+    #[QueryParam("page", "int")]
+    #[Authenticated]
     public function index()
     {
-        $rent= Rent::all();
-        return response()->json($rent);
+        return  RentResource::collection(
+            Rent::query()->paginate(
+                perPage: \request('perPage'),
+                page: \request('page')
+            )
+        );
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return RentResource
-     */
+    #[Group("Rent management")]
+    #[Authenticated]
     public function store(RentRequest $request)
     {
         $rent = Rent::query()->create($request->validated());
         return new RentResource($rent);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rent  $rent
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Rent management")]
+    #[Authenticated]
     public function show(Rent $rent)
     {
         return response()->json($rent);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rent  $rent
-     * @return RentResource
-     */
+    #[Group("Rent management")]
+    #[Authenticated]
     public function update(RentRequest $request, Rent $rent)
     {
         $rent->fill($request->validated());
@@ -60,12 +52,8 @@ class RentController extends Controller
         return new RentResource($rent);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Rent  $rent
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Rent management")]
+    #[Authenticated]
     public function destroy(Rent $rent)
     {
         $rent->delete();

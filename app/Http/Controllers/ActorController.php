@@ -6,28 +6,31 @@ use App\Http\Requests\ActorRequest;
 use App\Http\Resources\ActorResource;
 use App\Models\Actor;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Authenticated;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\Subgroup;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Actor management")]
+    #[QueryParam("per_page", "int")]
+    #[QueryParam("page", "int")]
+    #[Authenticated]
+
     public function index()
     {
-        $actor= Actor::all();
-        return response()->json($actor);
+        return  ActorResource::collection(
+            Actor::query()->paginate(
+                perPage: \request('perPage'),
+                page: \request('page')
+            )
+        );
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return ActorResource
-     */
+    #[Group("Actor management")]
+    #[Authenticated]
     public function store(ActorRequest $request)
     {
         $actor = Actor::query()->create($request->validated());
@@ -35,25 +38,16 @@ class ActorController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Actor  $actor
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Actor management")]
+    #[Authenticated]
     public function show(Actor $actor)
     {
         return response()->json($actor);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Actor  $actor
-     * @return ActorResource
-     */
+    #[Group("Actor management")]
+    #[Authenticated]
     public function update(ActorRequest $request, Actor $actor)
     {
         $actor->fill($request->validated());
@@ -61,12 +55,8 @@ class ActorController extends Controller
         return new ActorResource($actor);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Actor  $actor
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[Group("Actor management")]
+    #[Authenticated]
     public function destroy(Actor $actor)
     {
         $actor->delete();

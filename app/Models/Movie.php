@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
@@ -24,6 +25,12 @@ class Movie extends Model
     public function rent(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Rent::class,'movie_rent', 'rent_id', 'movie_id');
+    }
+
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
     }
 
 }

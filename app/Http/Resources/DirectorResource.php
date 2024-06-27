@@ -17,7 +17,7 @@ class DirectorResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'lastName'=>$this->last_name,
-            'createdAt'=>$this->created_at
+            'createdAt'=>$this->created_at->format('d/M, Y'),
         ];
     }
 }

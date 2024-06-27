@@ -18,8 +18,9 @@ class MovieResource extends JsonResource
         'title'=>$this->title,
         'description'=>$this->description,
         'genre'=>$this->genre,
-        'publishAt'=>$this->publish_at,
-        'directorId'=>$this->director_id
+        'publishAt'=>$this->publish_at->format('d/M, Y'),
+        'directorId'=>$this->director_id,
+            'createdAt'=>$this->created_at->format('d/M, Y'),
         ];
     }
 }
